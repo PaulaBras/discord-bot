@@ -1,4 +1,4 @@
-import { Client, Intents } from 'discord.js';
+import { Client, Intents, Interaction } from 'discord.js';
 import { Config } from '../config/config';
 import { QuestionCommand } from '../commands/questionCommand';
 
@@ -32,8 +32,9 @@ export class Bot {
     ]);
   }
 
-  private async onInteraction(interaction: any): Promise<void> {
+  private async onInteraction(interaction: Interaction): Promise<void> {
     if (!interaction.isCommand()) return;
+    if (interaction.channelId !== this.config.channelId) return;
 
     if (interaction.commandName === 'question') {
       await new QuestionCommand().execute(interaction);
