@@ -4,7 +4,7 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '5'))
     }
     environment {
-        REGISTRY_CREDENTIALS = credentials('8e4baf84-b181-4bca-a6ec-28739676813e    ')
+        REGISTRY_CREDENTIALS = credentials('8e4baf84-b181-4bca-a6ec-28739676813e')
         MAIN_VERSION = '1.0'
         REPO_NAME = 'discord-bot'
         REG_NAME = 'reg.pabr.de'
