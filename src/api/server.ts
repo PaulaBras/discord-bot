@@ -90,7 +90,11 @@ export class ApiServer {
       res.json({ message: 'Question updated successfully' });
     } catch (error) {
       console.error('Error updating question:', error);
-      res.status(500).json({ error: 'Failed to update question' });
+      if (error instanceof Error && error.message.includes('Duplicate entry')) {
+        res.status(409).json({ error: 'A question for this day already exists. Please choose a different day.' });
+      } else {
+        res.status(500).json({ error: 'Failed to update question' });
+      }
     }
   }
 

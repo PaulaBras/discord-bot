@@ -1,6 +1,7 @@
 import { Client, Intents, Interaction } from 'discord.js';
 import { Config } from '../config/config';
 import { QuestionCommand } from '../commands/questionCommand';
+import { ScoreboardCommand } from '../commands/scoreboardCommand';
 import { Database } from '../database/database';
 
 export class Bot {
@@ -8,6 +9,7 @@ export class Bot {
   private config: Config;
   private database: Database;
   private questionCommand: QuestionCommand;
+  private scoreboardCommand: ScoreboardCommand;
 
   constructor(config: Config) {
     this.config = config;
@@ -16,6 +18,7 @@ export class Bot {
     });
     this.database = new Database(config);
     this.questionCommand = new QuestionCommand(config);
+    this.scoreboardCommand = new ScoreboardCommand(config);
 
     this.client.on('ready', this.onReady.bind(this));
     this.client.on('interactionCreate', this.onInteraction.bind(this));
@@ -36,6 +39,10 @@ export class Bot {
         name: 'daily_question',
         description: 'Get and answer the daily question',
       },
+      {
+        name: 'scoreboard',
+        description: 'Display the Question Master Scoreboard',
+      },
     ]);
   }
 
@@ -43,8 +50,13 @@ export class Bot {
     if (!interaction.isCommand()) return;
     if (interaction.channelId !== this.config.channelId) return;
 
-    if (interaction.commandName === 'daily_question') {
-      await this.questionCommand.execute(interaction);
+    switch (interaction.commandName) {
+      case 'daily_question':
+        await this.questionCommand.execute(interaction);
+        break;
+      case 'scoreboard':
+        await this.scoreboardCommand.execute(interaction);
+        break;
     }
   }
 }

@@ -22,6 +22,14 @@ CREATE TABLE IF NOT EXISTS user_answers (
     UNIQUE KEY user_question (user_id, question_id)
 );
 
+-- Create the scoreboard table
+CREATE TABLE IF NOT EXISTS scoreboard (
+    user_id VARCHAR(255) PRIMARY KEY,
+    username VARCHAR(255) NOT NULL,
+    score FLOAT DEFAULT 0,
+    UNIQUE KEY unique_user (user_id)
+);
+
 -- Insert some sample questions
 INSERT INTO questions (question_text, answers, correct_answers, day) VALUES
 ('What is the capital of France?', '["Paris", "London", "Berlin", "Madrid"]', '["Paris"]', CURDATE()),

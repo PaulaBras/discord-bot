@@ -11,6 +11,7 @@ export class QuestionCommand {
 
   public async execute(interaction: CommandInteraction): Promise<void> {
     const userId = interaction.user.id;
+    const username = interaction.user.username;
 
     try {
       // Check if the user has already answered today's question
@@ -86,10 +87,23 @@ export class QuestionCommand {
         const correctAnswers = question.correct_answers;
         const isCorrect = selectedAnswers.length === correctAnswers.length && 
                           selectedAnswers.every((answer: string) => correctAnswers.includes(answer));
+        const isPartiallyCorrect = question.correct_answers.length > 1 && 
+                                   selectedAnswers.some((answer: string) => correctAnswers.includes(answer));
+
+        let points = 0;
+        if (isCorrect) {
+          points = 1;
+        } else if (isPartiallyCorrect) {
+          points = 0.5;
+        }
+
+        await this.database.updateScoreboard(userId, username, points);
 
         const responseMessage = isCorrect ? 
-          `Correct! Your answer "${selectedAnswers.join(', ')}" is correct.` : 
-          `Thanks for your answer. The correct answer was: "${correctAnswers.join(', ')}".`;
+          `Correct! Your answer "${selectedAnswers.join(', ')}" is correct. You earned 1 point!` : 
+          isPartiallyCorrect ?
+          `Partially correct. You earned 0.5 points. The full correct answer was: "${correctAnswers.join(', ')}".` :
+          `Thanks for your answer. You earned 0 points. The correct answer was: "${correctAnswers.join(', ')}".`;
 
         await i.update({ content: responseMessage, components: [] });
       });

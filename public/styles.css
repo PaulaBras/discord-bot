@@ -1,0 +1,74 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+form, .controls {
+    margin-bottom: 20px;
+}
+input, textarea, select {
+    width: 100%;
+    margin-bottom: 10px;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+th {
+    background-color: #f2f2f2;
+}
+.answer-list {
+    list-style-type: none;
+    padding: 0;
+}
+.answer-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+.answer-item input[type="checkbox"] {
+    margin-right: 5px;
+}
+.answer-item input[type="text"] {
+    flex-grow: 1;
+}
+.answer-item button {
+    margin-left: 5px;
+}
+.hidden {
+    display: none;
+}
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+.pagination button {
+    margin: 0 5px;
+}
+.correct-btn, .remove-btn {
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 12px;
+    margin: 2px 2px;
+    cursor: pointer;
+}
+.correct-btn.correct {
+    background-color: #4CAF50;
+}
+.correct-btn.incorrect {
+    background-color: #f44336;
+}
+.remove-btn {
+    background-color: #ff9800;
+}

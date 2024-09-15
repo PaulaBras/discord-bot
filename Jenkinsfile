@@ -30,11 +30,7 @@ pipeline {
                                     -H 'accept: application/json'", returnStdout: true).trim()
 
                                 def parsedJson = readJSON text: latestTagOutput
-                                def matchingTags = parsedJson.findAll 
-                                {
-                                    echo "${it}"
-                                    it.name.startsWith(env.MAIN_VERSION) 
-                                }
+                                def matchingTags = parsedJson.findAll { it.name.startsWith(env.MAIN_VERSION) }
                                 def latestDockerTag = '0.0.0'
 
                                 if (matchingTags.size() > 0) {
