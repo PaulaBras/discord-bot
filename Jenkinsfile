@@ -25,7 +25,7 @@ pipeline {
                     updateGitlabCommitStatus(name: 'Build', state: 'running')
                         script {
                             try {
-                                def latestTagOutput = sh(script: "curl -X 'GET' -u $REGISTRY_CREDENTIALS_USR:$REGISTRY_CREDENTIALS_PSW \
+                                def latestTagOutput = sh(script: "curl -X 'GET' -u ${$REGISTRY_CREDENTIALS_USR}:$REGISTRY_CREDENTIALS_PSW \
                                     'https://${REG_NAME}/api/v2.0/projects/${REPO_NAME}/repositories/${env.BRANCH_NAME}-build/artifacts/latest/tags' \
                                     -H 'accept: application/json'", returnStdout: true).trim()
 
